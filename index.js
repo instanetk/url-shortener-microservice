@@ -1,18 +1,10 @@
-const mongoose = require("mongoose");
-const redirect = require("./routes/redirect");
+const redirect = require("./routes/shortener");
 const express = require("express");
 const app = express();
 
 app.use("/", redirect);
 
-mongoose.connect(
-  "mongodb://localhost/url_redirect",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  console.log("Connected to MongoDB")
-);
+require("./startup/db")();
 
 const port = process.env.PORT || 3000;
 
