@@ -1,10 +1,8 @@
-// const formData = require("express-form-data");
 const redirect = require("./routes/shortener");
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 
-// app.use(formData.parse());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", redirect);
 
