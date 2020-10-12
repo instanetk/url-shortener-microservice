@@ -1,7 +1,9 @@
+const formData = require("express-form-data");
 const redirect = require("./routes/shortener");
 const express = require("express");
 const app = express();
 
+app.use(formData.parse());
 app.use("/", redirect);
 
 require("./startup/db")();

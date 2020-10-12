@@ -20,7 +20,6 @@ shortenerSchema.plugin(autoIncrement.plugin, {
 const Shortener = mongoose.model("Shortener", shortenerSchema);
 
 function validateUrl(original) {
-  // const schema = Joi.string().domain();
   const schema = Joi.string().uri();
 
   return schema.validate(original);

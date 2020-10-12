@@ -7,26 +7,27 @@ router.get("/api/shorturl/:index", async (req, res) => {
 
   const result = await Shortener.findOne({ short_url: index });
 
-  res.redirect("http://" + result.original_url);
+  res.redirect(result.original_url);
 });
 
 router.post("/api/shorturl/new/", async (req, res) => {
-  const { error } = validate(req.query.url);
-  if (error) return res.status(400).send({ error: "Invalid URL" });
+  const address = req.body.url_input;
 
+  const { error } = validate(address);
+  if (error) return res.status(400).send({ error: "invalid URL" });
   try {
     let url = new Shortener({
-      original_url: req.query.url,
+      original_url: address,
     });
 
     await url.save();
 
     const result = await Shortener.findById(url._id);
 
-    res.send({ original_url: req.query.url, short_url: result.short_url });
+    res.send({ original_url: address, short_url: result.short_url });
   } catch (ex) {
     console.log(ex.message);
-    res.send({ error: "Invalid URL" });
+    res.send({ error: "invalid URL" });
   }
 });
 
