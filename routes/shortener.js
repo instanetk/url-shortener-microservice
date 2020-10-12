@@ -10,11 +10,11 @@ router.get("/api/shorturl/:index", async (req, res) => {
   res.redirect(result.original_url);
 });
 
-router.post("/api/shorturl/new/", async (req, res) => {
-  const address = req.body.url_input;
+router.post("/api/shorturl/new", async (req, res) => {
+  const address = req.body.url;
 
   const { error } = validate(address);
-  if (error) return res.status(400).send({ error: "invalid URL" });
+  if (error) return res.status(400).send({ error: "Invalid URL" });
   try {
     let url = new Shortener({
       original_url: address,
@@ -27,7 +27,7 @@ router.post("/api/shorturl/new/", async (req, res) => {
     res.send({ original_url: address, short_url: result.short_url });
   } catch (ex) {
     console.log(ex.message);
-    res.send({ error: "invalid URL" });
+    res.send({ error: "Invalid URL" });
   }
 });
 
